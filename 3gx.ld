@@ -19,8 +19,7 @@ SECTIONS
 	.text ALIGN(4) :
 	{
 		bootloader.o (.text*)
-		/* .init */		
-		KEEP( *(.crt0) )
+		/* .init */
 		KEEP( *(.init) )
 		. = ALIGN(4);
 

@@ -2,6 +2,7 @@
 #include <3ds/srv.h>
 #include <3ds/types.h>
 #include "plgldr.h"
+#include "csvc.h"
 #include "common.h"
 
 static Handle       thread;
@@ -24,6 +25,8 @@ void    ThreadMain(void* arg)
   // Plugin main loop
   while (1)
   {
+    svcSleepThread(1000000);
+
     // Check keys, display the menu if necessary
     if (HID_PAD & BUTTON_SELECT)
       Flash(0x00FF00);
@@ -39,6 +42,10 @@ void main(void)
   // 3ds/srv.h
   srvInit();
 
+  // Set a flag to be signaled when the process will be exited
+  svcControlProcess(CUR_PROCESS_HANDLE, PROCESSOP_SIGNAL_ON_EXIT, 0, 0);
+
+  // Create the plugin's main thread
   svcCreateThread(&thread, ThreadMain, 0, (u32*)(stack + STACK_SIZE), 30, -1);
   return;
 }
