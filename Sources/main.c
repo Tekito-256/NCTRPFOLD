@@ -26,6 +26,8 @@ void ThreadMain(void* arg)
     svcSleepThread(1000000);
 
     // Check keys, display the menu if necessary
+    hidScanInput();
+
     if (hidKeysDown() & KEY_SELECT)
       Flash(0x00FF00);
   }
