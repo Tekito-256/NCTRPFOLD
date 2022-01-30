@@ -1,6 +1,4 @@
-#include <3ds/svc.h>
-#include <3ds/srv.h>
-#include <3ds/types.h>
+#include <3ds.h>
 #include "plgldr.h"
 #include "csvc.h"
 #include "common.h"
