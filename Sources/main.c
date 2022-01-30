@@ -1,15 +1,12 @@
-#include <3ds/svc.h>
-#include <3ds/srv.h>
-#include <3ds/types.h>
-#include <3ds/os.h>
+#include <3ds.h>
 #include "plgldr.h"
 #include "csvc.h"
 #include "common.h"
 
-static Handle       thread;
-static u8           stack[STACK_SIZE] ALIGN(8);
+static Handle thread;
+static u8     stack[STACK_SIZE] ALIGN(8);
 
-void     Flash(u32 color)
+void Flash(u32 color)
 {
   color |= 0x01000000;
   for (u32 i = 0; i < 64; i++)
@@ -21,7 +18,7 @@ void     Flash(u32 color)
 }
 
 // Plugin main thread entrypoint
-void    ThreadMain(void* arg)
+void ThreadMain(void* arg)
 {
   // Plugin main loop
   while (1)
@@ -29,7 +26,9 @@ void    ThreadMain(void* arg)
     svcSleepThread(1000000);
 
     // Check keys, display the menu if necessary
-    if (HID_PAD & BUTTON_SELECT)
+    hidScanInput();
+
+    if (hidKeysDown() & KEY_SELECT)
       Flash(0x00FF00);
   }
 }
