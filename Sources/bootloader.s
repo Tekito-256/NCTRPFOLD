@@ -1,7 +1,7 @@
 .arm
 .align(4);
 .section .text
-.global _start
+.global _start, __service_ptr
 _start:
     stmfd   sp!, {r0-r12, lr}
     mrs     r0, cpsr
@@ -18,6 +18,9 @@ _start:
     ldmfd	sp!, {r0}
     msr		cpsr, r0
     ldmfd	sp!, {r0-r12, pc}
+	
+	__service_ptr:
+	    .word 0
 
 @---------------------------------------------------------------------------------
 @ Clear memory to 0x00 if length != 0

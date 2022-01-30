@@ -1,6 +1,7 @@
 #include <3ds/svc.h>
 #include <3ds/srv.h>
 #include <3ds/types.h>
+#include <3ds/os.h>
 #include "plgldr.h"
 #include "csvc.h"
 #include "common.h"
@@ -39,8 +40,11 @@ void main(void)
   if (header->magic != HeaderMagic)
     return;
 
-  // 3ds/srv.h
+  mappableInit(OS_MAP_AREA_BEGIN, OS_MAP_AREA_END);
+  
   srvInit();
+  hidInit();
+  fsInit();
 
   // Set a flag to be signaled when the process will be exited
   svcControlProcess(CUR_PROCESS_HANDLE, PROCESSOP_SIGNAL_ON_EXIT, 0, 0);
