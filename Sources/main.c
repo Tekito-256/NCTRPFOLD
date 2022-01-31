@@ -17,6 +17,13 @@ void Flash(u32 color)
   REG32(0x10202204) = 0;
 }
 
+void onExit(void)
+{
+  hidExit();
+  fsExit();
+  srvExit();
+}
+
 // Plugin main thread entrypoint
 void ThreadMain(void* arg)
 {
@@ -24,6 +31,22 @@ void ThreadMain(void* arg)
   while (1)
   {
     svcSleepThread(1000000);
+
+    // check event
+    s32 event = PLGLDR__FetchEvent();
+    switch (event)
+    {
+    case PLG_ABOUT_TO_SWAP:
+      PLGLDR__Reply(event);
+      break;
+
+    case PLG_ABOUT_TO_EXIT:
+      onExit();
+      PLGLDR__Reply(event);
+      break;
+
+    default: break;
+    }
 
     // Check keys, display the menu if necessary
     hidScanInput();
@@ -44,6 +67,7 @@ void main(void)
   srvInit();
   hidInit();
   fsInit();
+  plgLdrInit();
 
   // Set a flag to be signaled when the process will be exited
   svcControlProcess(CUR_PROCESS_HANDLE, PROCESSOP_SIGNAL_ON_EXIT, 0, 0);
