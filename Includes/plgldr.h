@@ -65,3 +65,5 @@ Result  PLGLDR__SetExeDecSettings(void* decFunc, void* args);
 Result  PLGLDR__GetVersion(u32* version);
 void    PLGLDR__SetEventCallback(OnPlgLdrEventCb_t cb);
 void    PLGLDR__Status(void);
+s32     PLGLDR__FetchEvent(void);
+void    PLGLDR__Reply(s32 event);
