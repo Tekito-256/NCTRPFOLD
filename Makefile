@@ -14,7 +14,7 @@ BUILD		:= 	Build
 INCLUDES	:= 	Includes
 SOURCES 	:= 	Sources
 
-ifneq ($(shell gcc -Q --help=target | grep -m1 -e -march | awk '{print $$2}'),x86_64)
+ifneq ($(shell gcc -Q --help=target | grep -m1 -e -march | awk '{print $$2}'),x86-64)
 QEMU		:=  qemu-x86_64
 endif
 
