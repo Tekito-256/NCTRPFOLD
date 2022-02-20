@@ -14,6 +14,10 @@ BUILD		:= 	Build
 INCLUDES	:= 	Includes
 SOURCES 	:= 	Sources
 
+ifneq ($(shell gcc -Q --help=target | grep -m1 -e -march | awk '{print $$2}'),x86-64)
+QEMU		:=  qemu-x86_64
+endif
+
 #---------------------------------------------------------------------------------
 # options for code generation
 #---------------------------------------------------------------------------------
@@ -93,11 +97,13 @@ $(OUTPUT).3gx : $(OFILES)
 	@echo $(notdir $<)
 	@$(bin2o)
 
+.PRECIOUS: %.elf
+
 #---------------------------------------------------------------------------------
 %.3gx: %.elf
 #---------------------------------------------------------------------------------
 	@echo creating $(notdir $@)
-	@3gxtool -s $(word 1, $^) $(TOPDIR)/$(PLGINFO) $@
+	@$(QEMU) $(dir $(shell which 3gxtool))3gxtool -s $(word 1, $^) $(TOPDIR)/$(PLGINFO) $@
 
 -include $(DEPENDS)
 
