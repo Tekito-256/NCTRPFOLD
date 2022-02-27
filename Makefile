@@ -8,7 +8,7 @@ TOPDIR 		?= 	$(CURDIR)
 include $(DEVKITARM)/3ds_rules
 
 TARGET		:= 	$(notdir $(CURDIR))
-PLGINFO 	:= 	NewCTRPluginFramework.plgInfo
+PLGINFO 	:= 	NCTRPF.plgInfo
 
 BUILD		:= 	Build
 INCLUDES	:= 	Includes
