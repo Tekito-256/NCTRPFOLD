@@ -56,14 +56,14 @@ void ThreadMain(void* arg)
   }
 }
 
-void main(void)
+extern "C" int main(void)
 {
   PluginHeader *header = (PluginHeader *)(0x07000000);
   if (header->magic != HeaderMagic)
-    return;
+    return 0;
 
   mappableInit(0x11000000, OS_MAP_AREA_END);
-
+  
   srvInit();
   hidInit();
   fsInit();
@@ -74,5 +74,5 @@ void main(void)
 
   // Create the plugin's main thread
   svcCreateThread(&thread, ThreadMain, 0, (u32*)(stack + STACK_SIZE), 30, -1);
-  return;
+  return 0;
 }
