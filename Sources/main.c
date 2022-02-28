@@ -62,8 +62,8 @@ void main(void)
   if (header->magic != HeaderMagic)
     return;
 
-  mappableInit(OS_MAP_AREA_BEGIN, OS_MAP_AREA_END);
-  
+  mappableInit(0x11000000, OS_MAP_AREA_END);
+
   srvInit();
   hidInit();
   fsInit();
