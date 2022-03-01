@@ -97,11 +97,15 @@ $(OUTPUT).3gx : $(OFILES)
 	@echo $(notdir $<)
 	@$(bin2o)
 
+.PRECIOUS: %.elf
+
 #---------------------------------------------------------------------------------
 %.3gx: %.elf
 #---------------------------------------------------------------------------------
 	@echo creating $(notdir $@)
 	@$(QEMU) $(dir $(shell which 3gxtool))3gxtool -s $(word 1, $^) $(TOPDIR)/$(PLGINFO) $@
+	@cp $(TOPDIR)/NCTRPF.elf $(TOPDIR)/build/NCTRPF.elf
+	@rm $(TOPDIR)/NCTRPF.elf
 
 -include $(DEPENDS)
 
