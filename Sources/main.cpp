@@ -34,24 +34,16 @@ void ThreadMain(void* arg)
 
     // check event
     s32 event = PLGLDR__FetchEvent();
-    switch (event)
-    {
-    case PLG_ABOUT_TO_SWAP:
-      PLGLDR__Reply(event);
-      break;
 
-    case PLG_ABOUT_TO_EXIT:
+    if (event == PLG_ABOUT_TO_EXIT)
       onExit();
-      PLGLDR__Reply(event);
-      break;
 
-    default: break;
-    }
+    PLGLDR__Reply(event);
 
     // Check keys, display the menu if necessary
     hidScanInput();
 
-    if (hidKeysDown() & KEY_SELECT)
+    if (hidKeysHeld() & KEY_SELECT)
       Flash(0x00FF00);
   }
 }
