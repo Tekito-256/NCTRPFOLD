@@ -7,6 +7,10 @@
 
 #define  HeaderMagic (0x24584733) /* "3GX$" */
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef struct
 {
   bool    noFlash;
@@ -67,3 +71,7 @@ void    PLGLDR__SetEventCallback(OnPlgLdrEventCb_t cb);
 void    PLGLDR__Status(void);
 s32     PLGLDR__FetchEvent(void);
 void    PLGLDR__Reply(s32 event);
+
+#ifdef __cplusplus
+}
+#endif

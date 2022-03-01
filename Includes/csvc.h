@@ -18,6 +18,11 @@
 
 #include <3ds/types.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 /// Operations for svcControlService
 typedef enum ServiceOp
 {
@@ -178,3 +183,8 @@ typedef enum ProcessOp
 
 Result  svcControlProcess(Handle process, ProcessOp op, u32 varg2, u32 varg3);
 ///@}
+
+
+#ifdef __cplusplus
+}
+#endif
