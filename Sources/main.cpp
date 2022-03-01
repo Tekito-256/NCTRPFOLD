@@ -2,6 +2,7 @@
 #include "plgldr.h"
 #include "csvc.h"
 #include "common.h"
+#include "NCTRPF/Screen.hpp"
 
 static Handle thread;
 static u8     stack[STACK_SIZE] ALIGN(8);
@@ -19,6 +20,7 @@ void Flash(u32 color)
 
 void onExit(void)
 {
+  Screen::Exit();
   hidExit();
   fsExit();
   srvExit();
@@ -44,7 +46,10 @@ void ThreadMain(void* arg)
     hidScanInput();
 
     if (hidKeysHeld() & KEY_SELECT)
-      Flash(0x00FF00);
+    {
+      Screen &bottom = Screen::GetBottom();
+      bottom.Flash(0xFFFF00);
+    }
   }
 }
 
@@ -60,6 +65,7 @@ extern "C" int main(void)
   hidInit();
   fsInit();
   plgLdrInit();
+  Screen::Initialize();
 
   // Set a flag to be signaled when the process will be exited
   svcControlProcess(CUR_PROCESS_HANDLE, PROCESSOP_SIGNAL_ON_EXIT, 0, 0);
