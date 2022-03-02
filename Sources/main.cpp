@@ -17,7 +17,7 @@ void Flash(u32 color)
   REG32(0x10202204) = 0;
 }
 
-void onExit(void)
+void onExit()
 {
   hidExit();
   fsExit();
@@ -48,7 +48,7 @@ void ThreadMain(void* arg)
   }
 }
 
-extern "C" int main(void)
+int main()
 {
   PluginHeader *header = (PluginHeader *)(0x07000000);
   if (header->magic != HeaderMagic)
@@ -66,5 +66,4 @@ extern "C" int main(void)
 
   // Create the plugin's main thread
   svcCreateThread(&thread, ThreadMain, 0, (u32*)(stack + STACK_SIZE), 30, -1);
-  return 0;
 }
