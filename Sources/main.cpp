@@ -3,20 +3,10 @@
 #include "csvc.h"
 #include "common.h"
 #include "NCTRPF/Screen.hpp"
+#include "syscalls.hpp"
 
 static Handle thread;
 static u8     stack[STACK_SIZE] ALIGN(8);
-
-void Flash(u32 color)
-{
-  color |= 0x01000000;
-  for (u32 i = 0; i < 64; i++)
-  {
-    REG32(0x10202204) = color;
-    svcSleepThread(5000000);
-  }
-  REG32(0x10202204) = 0;
-}
 
 void onExit(void)
 {
@@ -24,6 +14,12 @@ void onExit(void)
   hidExit();
   fsExit();
   srvExit();
+}
+
+struct _reent* __syscall_getreent()
+{
+	ThreadVars* tv = getThreadVars();
+	return tv->reent;
 }
 
 // Plugin main thread entrypoint
