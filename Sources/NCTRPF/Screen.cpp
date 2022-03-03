@@ -136,7 +136,7 @@ void Screen::_drawPixel(u8 *framebuf, u32 color)
 
 void Screen::DrawPixel(u16 posX, u16 posY, u32 color)
 {
-  if(posX <= _width || posY <= Height)
+  if(posX <= _width && posY <= Height)
   {
     _drawPixel(GetFramebuffer(posX, posY), color);
   }
