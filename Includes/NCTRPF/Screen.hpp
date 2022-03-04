@@ -1,9 +1,14 @@
 #pragma once
 
 #include <3ds.h>
-#include "common.h"
 #include <string.h>
+#include <string>
 #include <cmath>
+#include "common.h"
+#include "LinuxFont.h"
+
+#define SPACING_Y 11
+#define SPACING_X 6
 
 class Screen {
 public:
@@ -20,7 +25,8 @@ public:
 
   void DrawPixel(u16 posX, u16 posY, u32 color);
   void DrawRect(u16 posX, u16 posY, u16 width, u16 height, u32 color, bool fill = true);
-  //void DrawLine(u16 posX1, u16 posY1, u16 posX2, u16 posY2, u32 color);
+  void DrawLine(u16 posX1, u16 posY1, u16 posX2, u16 posY2, u32 color);
+  u32 DrawString(const std::string &str, u32 posX, u32 posY, u32 foreground = 0xFFFFFFFF, u32 background = 0);
 
   void Clear();
   void Update();
@@ -40,6 +46,7 @@ private:
   Screen(bool isTop);
   ~Screen();
   void _drawPixel(u8 *framebuf, u32 color);
+  void _drawCharacter(char character, u16 posX, u16 posY, u32 foreground, u32 background);
 
   static constexpr u16 Height = 240;
   static constexpr u32 TopInfoBase = 0x10400400;

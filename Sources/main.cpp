@@ -51,14 +51,18 @@ void __system_allocateHeaps()
 // Plugin main thread entrypoint
 void ThreadMain(void* arg)
 {
+  // Initialize systems
   __sync_init();
   __system_initSyscallsEx();
   __system_allocateHeaps();
   
+  // Initialize services
   srvInit();
   hidInit();
   fsInit();
   plgLdrInit();
+
+  // Initialize classes
   Screen::Initialize();
 
   // Plugin main loop
@@ -80,7 +84,7 @@ void ThreadMain(void* arg)
     if (hidKeysHeld() & KEY_SELECT)
     {
       Screen &bottom = Screen::GetBottom();
-      bottom.Flash(0xFFFF00);
+      bottom.DrawString("Hello!", 0, 0);
     }
   }
 }

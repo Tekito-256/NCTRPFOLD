@@ -154,7 +154,38 @@ void Screen::DrawRect(u16 posX, u16 posY, u16 width, u16 height, u32 color, bool
   }
 }
 
-/*void Screen::DrawLine(u16 posX1, u16 posY1, u16 posX2, u16 posY2, u32 color)
+void Screen::_drawCharacter(char character, u16 posX, u16 posY, u32 foreground, u32 background)
+{
+  for(u16 y = 0; y < 10; y++)
+  {
+    char charPos = Global::LinuxFont[character * 10 + y];
+    for(u16 x = 6; x >= 1; x--)
+    {
+      u32 color = ((charPos >> x) & 1) ? foreground : background;
+      DrawPixel(posX + (6 - x), posY + y, color);
+    }
+  }
+}
+
+u32 Screen::DrawString(const std::string &str, u32 posX, u32 posY, u32 foreground, u32 background)
+{
+  const char *string = str.c_str();
+  for(u32 i = 0, x_count = 0; i < ((u32) strlen(string)); i++)
+  {
+    if(string[i] == '\n')
+    {
+      posY += SPACING_Y;
+      x_count = 0;
+      continue;
+    }
+    _drawCharacter(string[i], posX + x_count * SPACING_X, posY, foreground, background);
+    x_count++;
+  }
+  return posY;
+}
+
+/*
+void Screen::DrawLine(u16 posX1, u16 posY1, u16 posX2, u16 posY2, u32 color)
 {
   u16 dx = posX2 - posX1, dy = posY2 - posY1;
 
@@ -164,6 +195,7 @@ void Screen::DrawRect(u16 posX, u16 posY, u16 width, u16 height, u32 color, bool
     {
       DrawPixel(posX1, posY1 + y, color);
     }
+    return;
   }
 
   if (dy == 0)
@@ -172,6 +204,7 @@ void Screen::DrawRect(u16 posX, u16 posY, u16 width, u16 height, u32 color, bool
     {
       DrawPixel(posX1 + x, posY1, color);
     }
+    return;
   }
 
   float slope = (float)dy / dx;
@@ -188,4 +221,5 @@ void Screen::DrawRect(u16 posX, u16 posY, u16 width, u16 height, u32 color, bool
     {
       DrawPixel(posX1 + (u8)(y*(1/slope)), posY1 + y, color);
     }
-}*/
+}
+*/
