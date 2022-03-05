@@ -8,7 +8,7 @@
 static Handle thread;
 static u8     stack[STACK_SIZE] ALIGN(8);
 
-void onExit(void)
+void onExit()
 {
   Screen::Exit();
   hidExit();
@@ -89,9 +89,8 @@ void ThreadMain(void* arg)
   }
 }
 
-extern "C" int main(void)
+int main()
 {
   // Create the plugin's main thread
   svcCreateThread(&thread, ThreadMain, 0, (u32*)(stack + STACK_SIZE), 30, -1);
-  return 0;
 }
