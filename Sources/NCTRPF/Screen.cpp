@@ -144,9 +144,9 @@ void Screen::DrawPixel(u16 posX, u16 posY, u32 color)
 
 void Screen::DrawRect(u16 posX, u16 posY, u16 width, u16 height, u32 color, bool fill) 
 {
-  for(u16 x = 0; x < width; x++)
+  for(u16 x = 0; x <= width; x++)
   {
-    for(u16 y = 0; y < height; y++)
+    for(u16 y = 0; y <= height; y++)
     {
       if(fill || x == 0 || y == 0 || x == width || y == height)
         DrawPixel(posX + x, posY + y, color);
