@@ -1,7 +1,7 @@
 .arm
 .align(4);
 .section .text
-.global _start, __service_ptr
+.global _start, __service_ptr, __apt_appid, __system_runflags
 _start:
     stmfd   sp!, {r0-r12, lr}
     mrs     r0, cpsr
@@ -19,8 +19,12 @@ _start:
     msr		cpsr, r0
     ldmfd	sp!, {r0-r12, pc}
 	
-	__service_ptr:
-	    .word 0
+__service_ptr:
+    .word 0
+__apt_appid:
+    .word 0x300
+__system_runflags:
+    .word 0
 
 @---------------------------------------------------------------------------------
 @ Clear memory to 0x00 if length != 0

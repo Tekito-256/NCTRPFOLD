@@ -12,7 +12,7 @@ PLGINFO 	:= 	NCTRPF.plgInfo
 
 BUILD		:= 	Build
 INCLUDES	:= 	Includes
-SOURCES 	:= 	Sources
+SOURCES 	:= 	Sources Sources/NCTRPF
 
 ifneq ($(shell gcc -Q --help=target | grep -m1 -e -march | awk '{print $$2}'),x86-64)
 QEMU		:=  qemu-x86_64
